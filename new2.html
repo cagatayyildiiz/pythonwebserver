@@ -1,0 +1,124 @@
+<html>
+   <head>
+       <title>{{ title }}</title>
+       <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+       <script src = "https://code.highcharts.com/highcharts.js"></script>
+       <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+       <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+
+       <script language = "JavaScript">
+
+
+       function draw_chart(){
+            var o1 = document.getElementById("portfoyinput").value;
+            var array = new Array();
+            var tarih=new Array();
+            var paydeger=new Array();
+            $.post("http://localhost:8889/data", {option: o1}, function(data) {
+               array = data["pay"];
+               var i;
+               for (i = 0; i < array.length; i++) {
+                  if (!tarih.includes((array[i]["Tarih"].split("T"))[0])) {
+                     tarih.push((array[i]["Tarih"].split("T"))[0]);
+                     paydeger.push(array[i]["BirimPayDegeri"]);
+                  }
+               }$(document).ready(function () {
+               var title = {
+                  text: 'Portföy Değerleri'
+               };
+               var subtitle = {
+                  text: 'Kaynak: spk.com'
+               };
+               var xAxis = {
+                  categories: tarih
+               };
+               var yAxis = {
+                  title: {
+                     text: 'Fiyat'
+                  },
+                  plotLines: [{
+                     value: 0,
+                     width: 1,
+                     color: '#808080'
+                  }]
+               };
+               var tooltip = {
+                  valueSuffix: ''
+               }
+               var legend = {
+                  layout: 'vertical',
+                  align: 'right',
+                  verticalAlign: 'middle',
+                  borderWidth: 0
+               };
+               var series = [{
+                  name: 'Fiyat',
+                  data: paydeger
+               }
+               ];
+
+               var json = {};
+               json.title = title;
+               json.subtitle = subtitle;
+               json.xAxis = xAxis;
+               json.yAxis = yAxis;
+               json.tooltip = tooltip;
+               json.legend = legend;
+               json.series = series;
+               $('#container').highcharts(json);
+            });
+            });
+       }
+       function mycookie() {
+           var a1=$('input[name="month"]:checked').val();
+           Cookies.set("mycookie",a1);
+           Document.getElementById("selected").innerHTML=a1;
+       }
+
+      </script>
+   </head>
+
+   <body>
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-sm-4">
+   <div id = "container" style = "width: 550px; height: 400px; float: left "></div>
+      </div>
+      <div class="col-sm-4">
+   <div  style = "width: 250px; height: 150px; float: right" >
+            <input list="portfoys" id="portfoyinput">
+            <datalist id="portfoys" >
+                    <select style="width:500px;" name ="option" >
+                    {% for key,value in dict.items() %}
+                    <option style="width:550px;" value="{{key}}" > {{value}}</option>
+                    {% end %}
+                    </select>
+            </datalist>
+            <button onclick="draw_chart()" type="button">
+                ARA  </button>
+   </div>
+      </div>
+      <div class="col-sm-4">
+   <div float="center">
+       <form id="myform" >
+           <input type="radio" name="month" value="1" style="font-family: 'Trebuchet MS'"> Son Bir Aylık <br>
+           <input type="radio" name="month" value="3" style="font-family: 'Trebuchet MS'" > Son Üç Aylık<br>
+           <input type="radio" name="month" value="6" style="font-family: 'Trebuchet MS'"> Son Altı Aylık<br>
+           <input type="radio" name="month" value="12"style="font-family: 'Trebuchet MS'"> Son Bir Senelik<br>
+           <input type="radio" name="month" value="36"style="font-family: 'Trebuchet MS'"> Son Üç Senelik<br>
+           <input type="submit" value="Seç" onclick="mycookie()" >
+       </form>
+   </div>
+      </div>
+  </div>
+</div>
+
+   </body>
+
+</html>
