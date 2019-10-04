@@ -1,13 +1,4 @@
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-       <script src = "https://code.highcharts.com/highcharts.js"></script>
-       <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-       <meta charset="utf-8">
-       <meta name="viewport" content="width=device-width, initial-scale=1">
-       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-       <script language = "JavaScript">
        function draw_chart(){
             var o1 = document.getElementById("portfoyinput").value;
             var o2= document.getElementById("target").value;
@@ -116,4 +107,3 @@
         }
 
 
-      </script>
