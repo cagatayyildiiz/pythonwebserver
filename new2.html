@@ -12,76 +12,7 @@
 
 
 
-       <script language = "JavaScript">
-
-
-       function draw_chart(){
-            var o1 = document.getElementById("portfoyinput").value;
-            var array = new Array();
-            var tarih=new Array();
-            var paydeger=new Array();
-            $.post("http://localhost:8889/data", {option: o1}, function(data) {
-               array = data["pay"];
-               var i;
-               for (i = 0; i < array.length; i++) {
-                  if (!tarih.includes((array[i]["Tarih"].split("T"))[0])) {
-                     tarih.push((array[i]["Tarih"].split("T"))[0]);
-                     paydeger.push(array[i]["BirimPayDegeri"]);
-                  }
-               }$(document).ready(function () {
-               var title = {
-                  text: 'Portföy Değerleri'
-               };
-               var subtitle = {
-                  text: 'Kaynak: spk.com'
-               };
-               var xAxis = {
-                  categories: tarih
-               };
-               var yAxis = {
-                  title: {
-                     text: 'Fiyat'
-                  },
-                  plotLines: [{
-                     value: 0,
-                     width: 1,
-                     color: '#808080'
-                  }]
-               };
-               var tooltip = {
-                  valueSuffix: ''
-               }
-               var legend = {
-                  layout: 'vertical',
-                  align: 'right',
-                  verticalAlign: 'middle',
-                  borderWidth: 0
-               };
-               var series = [{
-                  name: 'Fiyat',
-                  data: paydeger
-               }
-               ];
-
-               var json = {};
-               json.title = title;
-               json.subtitle = subtitle;
-               json.xAxis = xAxis;
-               json.yAxis = yAxis;
-               json.tooltip = tooltip;
-               json.legend = legend;
-               json.series = series;
-               $('#container').highcharts(json);
-            });
-            });
-       }
-       function mycookie() {
-           var a1=$('input[name="month"]:checked').val();
-           Cookies.set("mycookie",a1);
-           Document.getElementById("selected").innerHTML=a1;
-       }
-
-      </script>
+       
    </head>
 
    <body>
